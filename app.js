@@ -20,9 +20,11 @@ app.set('view engine', 'ejs');
 //set public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/',(req,res)=>{
-    res.send('it is working');
-})
+//set routes
+var pages = require('./routes/pages.js');
+var adminPages = require('./routes/admin_pages.js');
+app.use('/admin/pages', adminPages)
+app.use('/', pages);
 
 
 app.listen(3000,()=>{
