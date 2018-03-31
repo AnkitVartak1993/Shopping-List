@@ -122,17 +122,16 @@ router.post('/edit-page/:slug',(req,res)=>{
     }
 });
 
-//Get Edit page
-router.get('/edit-page/:id',(req,res)=>{
-    Page.findById(req.params.id, (err,page)=>{
+//Get Edit category
+router.get('/edit-category/:id',(req,res)=>{
+    Category.findById(req.params.id, (err,category)=>{
         if(err){
             return console.log(err);
         }
-        res.render('admin/edit_page',{
-            title: page.title,
-            slug: page.slug,
-            content: page.content,
-            id: page._id
+        res.render('admin/edit_category',{
+            title: category.title,
+            slug: category.slug,
+            id: category._id
         })
     })
     
