@@ -127,14 +127,14 @@ router.get('/edit-category/:id',(req,res)=>{
     
 })
 
-//GET Delete 
-router.get('/delete-page/:id',(req,res)=>{
-    Page.findByIdAndRemove(req.params.id, (err,page)=>{
+//GET Delete category
+router.get('/delete-category/:id',(req,res)=>{
+    Category.findByIdAndRemove(req.params.id, (err,category)=>{
         if(err){
             return console.log(err);
         }
-        req.flash('success', 'Page deleted!');
-        res.redirect('/admin/pages/');
+        req.flash('success', `Category ${ category.title } deleted!`);
+        res.redirect('/admin/categories/');
     });
     
 });
