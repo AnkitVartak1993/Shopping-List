@@ -82,7 +82,7 @@ router.post('/add-page',(req,res)=>{
 //POST edit page
 router.post('/edit-page/:slug',(req,res)=>{
    // res.render('index',{title:'Home'});
-   req.checkBody('title', 'Title must have a value').notEmpty();
+   req.checkBody('title', 'Page slug exists, choose another.').notEmpty();
    req.checkBody('content', 'Content must have a value').notEmpty();
    
    var title = req.body.title;
