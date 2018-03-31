@@ -2,18 +2,12 @@
 <h2 class="page-title">Add a Category</h2>
 <a href="/admin/pages" class="btn btn-primary">Back to all pages</a>
 
-<form method="post" action="/admin/pages/add-category">
+<form method="post" action="/admin/categories/add-category">
     
     <div class="form-group">
         <label for="">Title</label>
         <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
     </div>
-    
-    <div class="form-group">
-        <label for="">Slug</label>
-        <input type="text" class="form-control" name="slug" value="<%= slug %>" placeholder="Slug">
-    </div>
-    
     
     <button class="btn btn-default">Submit</button>
 </form>
