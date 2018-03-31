@@ -135,6 +135,7 @@ router.post('/edit-page/:slug',(req,res)=>{
     }
 });
 
+//Get Edit page
 router.get('/edit-page/:id',(req,res)=>{
     Page.findById(req.params.id, (err,page)=>{
         if(err){
@@ -149,6 +150,18 @@ router.get('/edit-page/:id',(req,res)=>{
     })
     
 })
+
+//GET Delete 
+router.get('/delete-page/:id',(req,res)=>{
+    Page.findByIdAndRemove(req.params.id, (err,page)=>{
+        if(err){
+            return console.log(err);
+        }
+        req.flash('success', 'Page deleted!');
+        res.redirect('/admin/pages/');
+    });
+    
+});
 
 
 
