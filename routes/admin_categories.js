@@ -105,8 +105,7 @@ router.post('/edit-category/:id',(req,res)=>{
                         req.flash('success', 'Page Added!');
                         res.redirect('/admin/categories/edit-category/'+category._id);
                     });
-                    });
-                   
+                    }); 
             }
         });
         console.log('success');
