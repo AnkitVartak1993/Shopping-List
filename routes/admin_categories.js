@@ -66,53 +66,44 @@ router.post('/add-category',(req,res)=>{
     }
 });
 
-//POST edit page
-router.post('/edit-page/:slug',(req,res)=>{
-   // res.render('index',{title:'Home'});
-   req.checkBody('title', 'Page slug exists, choose another.').notEmpty();
-   req.checkBody('content', 'Content must have a value').notEmpty();
+//POST edit category
+router.post('/edit-category/:id',(req,res)=>{
+    // res.render('index',{title:'Home'});
+    req.checkBody('title', 'Category Title exists, choose another.').notEmpty();
    
-   var title = req.body.title;
-   var content = req.body.content;
-    var slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
-   if (slug == "")
-    slug = title.replace(/\s+/g, '-').toLowerCase();
-   var id = req.body.id;
-   var errors = req.validationErrors();
+    var title = req.body.title;
+    var slug = title.replace(/\s+/g, '-').toLowerCase();
+    var id = req.body.id;
+    var errors = req.validationErrors();
 
     if (errors) {
-        res.render('admin/edit_page', {
+        res.render('admin/edit_category', {
             errors: errors,
             title: title,
-            slug: slug,
-            content: content,
             id:id
         });
     } else {
 
-        Page.findOne({slug:slug, _id:{'$ne':id}},(err, page)=>{
-            if(page){
-                req.flash('danger', 'Page slug exists, choose another.');
-                res.render('admin/edit_page', {
+        Category.findOne({slug:slug, _id:{'$ne':id}},(err, category)=>{
+            if(category){
+                req.flash('danger', 'Category Title exists, choose another.');
+                res.render('admin/edit_category', {
                     title: title,
-                    slug: slug,
-                    content: content,
                     id: id
                 });
             } else {
-                    Page.findById(id, (err, page)=>{
+                    Category.findById(id, (err, category)=>{
                         if(err) 
                         return console.log(err);
 
-                        page.title = title;
-                        page.slug = slug;
-                        page.content = content;
+                        category.title = title;
+                        category.slug = slug;
 
-                        page.save((err)=>{
+                        category.save((err)=>{
                         if(err) return console.log(err);
                     
                         req.flash('success', 'Page Added!');
-                        res.redirect('/admin/pages/edit-page/'+page._id);
+                        res.redirect('/admin/categories/edit-category/'+category._id);
                     });
                     });
                    
