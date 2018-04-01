@@ -120,6 +120,7 @@ app.use(passport.session());
 //On every GET request
 app.get('*', function(req,res,next) {
    res.locals.cart = req.session.cart;
+   res.locals.user = req.user || null;
    next();
 });
 
