@@ -25,7 +25,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Express fileupload middleware
-//app.use(fileUpload);
+app.use(fileUpload());
 
 //set global error variable
 app.locals.errors = null;

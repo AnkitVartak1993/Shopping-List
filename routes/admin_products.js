@@ -26,4 +26,20 @@ router.get('/', function (req, res) {
     });
 });
 
+//Get add product
+router.get('/add-product', function (req, res) {
+
+    var title = "";
+    var desc = "";
+    var price = "";
+
+    Category.find(function (err, categories) {
+        res.render('admin/add_product', {
+            title: title,
+            desc: desc,
+            categories: categories,
+            price: price
+        });
+    });
+});
 module.exports =  router;
