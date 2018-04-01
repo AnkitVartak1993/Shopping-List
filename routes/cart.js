@@ -43,7 +43,7 @@ router.get('/add/:product', function (req, res) {
             }
         }
 
-       console.log(req.session.cart);
+        console.log(req.session.cart);
         req.flash('success', 'Product added!');
         res.redirect('back');
     });

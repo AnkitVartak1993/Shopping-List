@@ -85,7 +85,7 @@ router.post('/add-product', function (req, res) {
                 });
             } else {
 
-                var price2 = parseFloat(price).toFixed(7);
+                var price2 = parseFloat(price).toFixed(2);
 
                 var product = new Product({
                     title: title,
@@ -161,7 +161,7 @@ router.get('/edit-product/:id', function (req, res) {
                             desc: p.desc,
                             categories: categories,
                             category: p.category.replace(/\s+/g, '-').toLowerCase(),
-                            price: parseFloat(p.price).toFixed(7),
+                            price: parseFloat(p.price).toFixed(2),
                             image: p.image,
                             galleryImages: galleryImages,
                             id: p._id
