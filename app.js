@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 var session = require('express-session')
 var expressValidator = require('express-validator');
 var fileUpload = require('express-fileupload');
+var passport = require('passport');
 
 var app = express();
 //DB connect
@@ -126,6 +127,7 @@ app.get('*', function(req,res,next) {
 var pages = require('./routes/pages.js');
 var products = require('./routes/products.js');
 var cart = require('./routes/cart.js');
+var users = require('./routes/users.js');
 var adminPages = require('./routes/admin_pages.js');
 var adminCategories = require('./routes/admin_categories.js');
 var adminProducts = require('./routes/admin_products.js');
@@ -135,6 +137,7 @@ app.use('/admin/categories', adminCategories);
 app.use('/admin/products', adminProducts);
 app.use('/products', products);
 app.use('/cart', cart);
+app.use('/users', users);
 app.use('/', pages);
 
 
