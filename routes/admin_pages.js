@@ -70,6 +70,15 @@ router.post('/add-page',(req,res)=>{
                 });
 
                 page.save((err)=>{
+
+                    Page.find({}).sort({sorting: 1}).exec(function (err, pages) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            req.app.locals.pages = pages;
+                        }
+                    });
+
                     req.flash('success', 'Page Added!');
                     res.redirect('/admin/pages');
                 });
@@ -123,8 +132,16 @@ router.post('/edit-page/:slug',(req,res)=>{
 
                         page.save((err)=>{
                         if(err) return console.log(err);
-                    
-                        req.flash('success', 'Page Added!');
+
+                        Page.find({}).sort({sorting: 1}).exec(function (err, pages) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            req.app.locals.pages = pages;
+                        }
+        });
+                        
+                        req.flash('success', 'Page Edited!');
                         res.redirect('/admin/pages/edit-page/'+page._id);
                     });
                     });
@@ -157,6 +174,14 @@ router.get('/delete-page/:id',(req,res)=>{
         if(err){
             return console.log(err);
         }
+
+        Page.find({}).sort({sorting: 1}).exec(function (err, pages) {
+            if (err) {
+                console.log(err);
+            } else {
+                req.app.locals.pages = pages;
+            }
+        });
         req.flash('success', 'Page deleted!');
         res.redirect('/admin/pages/');
     });
@@ -166,8 +191,7 @@ router.get('/delete-page/:id',(req,res)=>{
 
 
 //Sort pages 
-router.post('/reorder-pages',(req,res)=>{
-    var ids = req.body['id[]'];
+function sortPages(ids, callback) {
     var count = 0;
 
     for (var i = 0; i < ids.length; i++) {
@@ -180,10 +204,30 @@ router.post('/reorder-pages',(req,res)=>{
                 page.save(function (err) {
                     if (err)
                         return console.log(err);
+                    ++count;
+                    if (count >= ids.length) {
+                        callback();
+                    }
                 });
             });
         })(count);
 
     }
-})
+}
+
+// POST reorder pages
+router.post('/reorder-pages', function (req, res) {
+    var ids = req.body['id[]'];
+
+    sortPages(ids, function () {
+        Page.find({}).sort({sorting: 1}).exec(function (err, pages) {
+            if (err) {
+                console.log(err);
+            } else {
+                req.app.locals.pages = pages;
+            }
+        });
+    });
+
+});
 module.exports =  router;
