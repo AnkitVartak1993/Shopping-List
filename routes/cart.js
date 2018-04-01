@@ -43,7 +43,6 @@ router.get('/add/:product', function (req, res) {
             }
         }
 
-        console.log(req.session.cart);
         req.flash('success', 'Product added!');
         res.redirect('back');
     });
@@ -97,6 +96,25 @@ router.get('/update/:product', function (req, res) {
 
     req.flash('success', 'Cart updated!');
     res.redirect('/cart/checkout');
+
+});
+
+//GET clear cart
+router.get('/clear', function (req, res) {
+
+    delete req.session.cart;
+    
+    req.flash('success', 'Cart cleared!');
+    res.redirect('/cart/checkout');
+
+});
+
+//GET buy now
+router.get('/buynow', function (req, res) {
+
+    delete req.session.cart;
+    
+    res.sendStatus(200);
 
 });
 
