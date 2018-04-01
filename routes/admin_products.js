@@ -272,4 +272,26 @@ router.post('/product-gallery/:id', function (req, res) {
 
 });
 
+//GET delet gallery images
+router.get('/delete-image/:image', function (req, res) {
+
+    var originalImage = 'public/product_images/' + req.query.id + '/gallery/' + req.params.image;
+    var thumbImage = 'public/product_images/' + req.query.id + '/gallery/thumbs/' + req.params.image;
+
+    fs.remove(originalImage, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            fs.remove(thumbImage, function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    req.flash('success', 'Image deleted!');
+                    res.redirect('/admin/products/edit-product/' + req.query.id);
+                }
+            });
+        }
+    });
+});
+
 module.exports =  router;
