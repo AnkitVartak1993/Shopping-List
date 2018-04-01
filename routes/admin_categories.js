@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
     Category.find(function (err, categories) {
         if (err)
             return console.log(err);
-            var title = 'Categories'
+            var title = 'Categories';
         res.render('admin/categories', {
             categories: categories,
             title:title
