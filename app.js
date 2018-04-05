@@ -7,9 +7,24 @@ var session = require('express-session')
 var expressValidator = require('express-validator');
 var fileUpload = require('express-fileupload');
 var passport = require('passport');
+var cluster = require('cluster');
+var http = require('http');
+var numCPUs = require('os').cpus().length;
 
 const port = process.env.PORT||3000;
 var app = express();
+var server = http.createServer(app);
+
+//Added multithread 
+if (cluster.isMaster) {
+  // Fork workers.
+  for (var i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+  cluster.on('death', function(worker) {
+  });
+} else {
+
 //DB connect
 mongoose.connect(dbString);
 
@@ -143,6 +158,7 @@ app.use('/users', users);
 app.use('/', pages);
 
 
-app.listen(port,()=>{
+server.listen(port,()=>{
     console.log(`App started at port ${port}`);
 });
+}
